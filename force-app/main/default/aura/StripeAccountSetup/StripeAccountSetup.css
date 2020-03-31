@@ -1,0 +1,26 @@
+.THIS .btn_next button {
+    min-width: 120px;
+}
+
+.THIS .input-group .lightningInput {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.THIS.mymodal {
+    background: red;
+}
+
+.THIS .optionDiv{
+    width: 20%;
+    display: inline-block;
+}
+
+.THIS .actionBtn {
+    margin-left: 5%;
+    display: inline;
+}
+
+.THIS .inlineCss {
+    display: inline-block;
+}

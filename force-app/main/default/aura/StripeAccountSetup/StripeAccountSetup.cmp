@@ -1,0 +1,129 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:lightningQuickAction" controller="StripeController">
+    <div class="slds-is-relative">
+        <lightning:overlayLibrary aura:id="overlayLib"/>
+    </div>
+    <!-- attributes -->
+    <aura:attribute name="options" type="List" default=""/>
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="accId" type="String"/>
+    <aura:attribute name="siteSettings" type="StripeSiteSettings__c"/>
+    <aura:attribute name="isModalOpen" type="Boolean"/>
+    <!--<aura:attribute name="pickDep" type="Boolean" default="True"/>-->
+    
+    <aura:attribute name="logsData" type="Object"/>
+    <aura:attribute name="columns2" type="List"/>
+    <aura:attribute name="batchMap" type="Map" default="{}"/>
+    <!--<aura:attribute name="batchOption" type="List" default="[
+                                                            {'label': 'Sync Customers', 'value': 'SyncAllStripeCustomerBatch'},
+                                                            {'label': 'Sync Products', 'value': 'SyncAllStripeProductsBatch'},
+                                                            {'label': 'Sync Tax Rates', 'value': 'SyncAllStripeTaxRatesBatch'},
+                                                            {'label': 'Sync Charges', 'value': 'SyncAllStripeChargesBatch'}
+                                                            ]"/>-->
+    
+    <!-- handlers-->
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+    <aura:handler name="getBatchMapValues" event="c:StripeSyncEvent" action="{!c.runBatch}"/>
+    <div class="slds-box slds-theme_default" Style="height:100%">    
+        <lightning:tabset variant="scoped">
+            <lightning:tab label="Stripe Accounts">
+                <!-- the container element determine the height of the datatable -->
+                <div style="height: 100%">
+                    <lightning:datatable
+                                         keyField="id"
+                                         data="{! v.data }"
+                                         showRowNumberColumn="true"
+                                         onrowaction="{! c.handleRowAction }"
+                                         columns="{! v.columns }"
+                                         hideCheckboxColumn="false"/>
+                </div>
+            </lightning:tab>
+            <lightning:tab label="Webhook Status">
+                <div class="slds-card">
+                    <div class="slds-p-around_medium">
+                        Create Webhook for Stripe Account
+                        <div>
+                            <div class="optionDiv">
+                                <lightning:combobox 
+                                                    name="Account Id for webhook creation" 
+                                                    label="Stripe Accounts"
+                                                    placeholder="Select Account" 
+                                                    options="{! v.options }" 
+                                                    onchange="{! c.handleChange }"/>
+                            </div>
+                            <div class="actionBtn">
+                                <lightning:button variant="brand" label="Create Webhook" title="Create Webhook" onclick="{! c.handleClick }" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-card">
+                    <div class="slds-p-around_medium">
+                        Webhook Event Logs
+                        <div style="height: 270px">
+                            <lightning:datatable
+                                                 keyField="id"
+                                                 data="{! v.logsData }"
+                                                 showRowNumberColumn="true"
+                                                 onrowaction=""
+                                                 columns="{! v.columns2 }"
+                                                 hideCheckboxColumn="false"/>
+                        </div>
+                    </div>
+                </div>
+            </lightning:tab>
+            <lightning:tab label="Settings" onactive="{! c.tab3 }">
+                <div class="slds-card">
+                    <div class="slds-p-around_medium">
+                        Webhook Settings
+                        <div class="slds-form-element slds-p-around_medium">
+                            <label class="slds-form-element__label" for="text-input-id-1" id="inline-text-label">Salesforce Site</label>
+                            <div class="slds-form-element__control">
+                                <lightning:input type="url" label="Organisation Site Url" name="input6" required="true" value="{!v.siteSettings.WebhookUrl__c}" style="width: 500px !important;" />
+                                <button class="slds-button slds-button_brand slds-m-top_x-small" onclick="{!c.saveSettings}" >Save Settings</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>              
+            </lightning:tab>
+             <lightning:tab label="Sync Data">
+                 <c:StripeSync options="{!v.options}"></c:StripeSync>
+            </lightning:tab>
+        </lightning:tabset>
+        <aura:if isTrue="{!v.isModalOpen}">
+            
+            <!-- Modal/Popup Box starts here-->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- Modal/Popup Box Header Starts here-->
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModel }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Modal/PopUp Box</h2>
+                    </header>
+                    <!--Modal/Popup Box Body Starts here-->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p><b>Modals/Popup Box are used to display content in a layer above the app. This paradigm is used in cases such as the creation or editing of a record, as well as various types of messaging and wizards.
+                            </b>
+                        </p>
+                    </div>
+                    <!--Modal/Popup Box Footer Starts here-->
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral"
+                                          label="Cancel"
+                                          title="Cancel"
+                                          onclick="{! c.closeModel }"/>
+                        <lightning:button variant="brand"
+                                          label="OK"
+                                          title="OK"
+                                          onclick="{!c.submitDetails}"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+    </div>
+</aura:component>

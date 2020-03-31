@@ -1,0 +1,76 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId" controller="StripeCustomerViewController" access="global">
+    
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+    <aura:attribute name="subCount" type="Integer"/>
+    <aura:attribute name="subRevenue" type="Decimal"/>
+    <aura:attribute name="chargeList" type="StripeCharge__c[]" />
+    <aura:attribute name="productList" type="Object[]" />
+    <aura:attribute name="paymentList" type="StripePaymentMethod__c[]" />
+    
+    <div class="slds-box slds-theme_default">
+        <div class="slds-form">
+            <div class="slds-form-element slds-form-element_horizontal">
+                <legend class="slds-form-element__label" for="horizontal-input-id-01">Subscriptions:</legend>
+                <div class="slds-form-element__control">
+                    <div class="slds-form-element__static">{!v.subCount}</div>
+                </div>
+            </div>
+            <div class="slds-form-element slds-form-element_horizontal">
+                <label class="slds-form-element__label" for="horizontal-input-id-02">Monthly Revenue:</label>
+                <div class="slds-form-element__control"><ui:outputCurrency value="{!v.subRevenue}"/></div>
+            </div>
+            
+            <div class="slds-form-element slds-form-element_horizontal">
+                <label class="slds-form-element__label" for="horizontal-input-id-02">Products:</label>
+                <div class="slds-form-element__control">
+                    <div class="slds-box" style="width: 40%;">
+                        <ol>
+                            <aura:iteration items="{!v.productList}" var="item">
+                                <li>
+                                    <a href="{!'/'+item.ProductId}"><lightning:formattedDateTime value="{!item.ProductName}"/>{!item.ProductSize} X {!item.ProductName}</a>
+                                </li>
+                            </aura:iteration>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form-element slds-form-element_horizontal">
+                <label class="slds-form-element__label" for="horizontal-input-id-02">Payment Method</label>
+                <div class="slds-form-element__control">
+                    <div class="slds-box" style="width: 40%;">
+                        <ol>
+                            <aura:iteration items="{!v.paymentList}" var="item">
+                                <li>
+                                    <img class="iconSize" src="{!$Resource.cardIcon}"/>&nbsp;<a href="{!'/'+item.Id}">{!item.Brand__c}:{!item.Last_Four_Digits__c}</a>
+                                </li>
+                            </aura:iteration>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form-element slds-form-element_horizontal">
+                <label class="slds-form-element__label" for="horizontal-input-id-02">Last Charges:</label>
+                <div class="slds-form-element__control">
+                    <div class="slds-box" style="width: 40%;">
+                        <ol>
+                            <aura:iteration items="{!v.chargeList}" var="item">
+                                <li>
+                                    <aura:if isTrue="{!item.Status__c == 'succeeded'}">
+                                        <lightning:icon iconName="utility:check" class="iconClass"/>
+                                        <aura:set attribute="else">
+                                            <lightning:icon iconName="utility:close" class="iconClass"/>
+                                        </aura:set>
+                                    </aura:if> <a href="{!'/'+item.Id}"><lightning:formattedDateTime value="{!item.Created__c}"/>: {!item.Name}</a>
+                                </li>
+                            </aura:iteration>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form-element slds-form-element_horizontal">
+                <label class="slds-form-element__label" for="horizontal-input-id-02"><a href="{!'/lightning/r/'+v.recordId+'/related/StripeCharges__r/view'}" class="slds-has-blur-focus slds-text-link">[ View Charges ]</a></label>
+                <div class="slds-form-element__control"><a href="javascript:void(0);" class="slds-has-blur-focus slds-text-link">[ View Invoices ]</a></div>
+            </div>
+        </div>
+    </div>
+</aura:component>

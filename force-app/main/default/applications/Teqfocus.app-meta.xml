@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <brand>
+        <headerColor>#0070D2</headerColor>
+        <logo>stripe_image</logo>
+        <logoVersion>1</logoVersion>
+        <shouldOverrideOrgTheme>true</shouldOverrideOrgTheme>
+    </brand>
+    <formFactors>Small</formFactors>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <label>Stripe For Salesforce</label>
+    <navType>Standard</navType>
+    <tabs>Stripe_Account__c</tabs>
+    <tabs>Stripe_Customer__c</tabs>
+    <tabs>StripeSubscription__c</tabs>
+    <tabs>StripeSubscriptionItem__c</tabs>
+    <tabs>standard-Product2</tabs>
+    <tabs>StripeCharge__c</tabs>
+    <tabs>Stripe_Setup</tabs>
+    <tabs>StripePlan__c</tabs>
+    <tabs>StripePaymentMethod__c</tabs>
+    <tabs>StripeTaxRate__c</tabs>
+    <tabs>StripeEvent__c</tabs>
+    <tabs>Webhook__c</tabs>
+    <uiType>Lightning</uiType>
+    <utilityBar>Stripe_UtilityBar</utilityBar>
+</CustomApplication>

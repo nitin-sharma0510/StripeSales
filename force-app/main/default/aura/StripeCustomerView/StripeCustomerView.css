@@ -1,0 +1,11 @@
+.THIS .iconClass svg {
+    width: 1rem;
+    height: 1rem;
+}
+.THIS .slds-has-blur-focus {
+    color: #0070d2;
+}
+.THIS .iconSize {
+    max-width: 10%;
+    height: auto;
+}

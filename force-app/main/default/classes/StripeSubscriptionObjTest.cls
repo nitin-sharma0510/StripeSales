@@ -1,0 +1,11 @@
+@isTest
+public class StripeSubscriptionObjTest {
+
+    @isTest
+    private static void testStripeSubscription(){
+        
+        String jsonStr='{"id":"sub_GW3ZIjtGyEEOel","object":"subscription","application_fee_percent":null,"billing_cycle_anchor":1578578028,"billing_thresholds":null,"cancel_at":null,"cancel_at_period_end":false,"canceled_at":null,"collection_method":"charge_automatically","created":1578578028,"current_period_end":1581256428,"current_period_start":1578578028,"customer":"cus_GQ1K8HcN7udgob","days_until_due":null,"default_payment_method":null,"default_source":null,"default_tax_rates":[],"discount":null,"ended_at":null,"items":{"object":"list","data":[{"id":"si_GW3Zt6EmnaUzEP","object":"subscription_item","billing_thresholds":null,"created":1578578029,"metadata":{},"plan":{"id":"plan_GVcvwakJhpKlRD","object":"plan","active":true,"aggregate_usage":null,"amount":10000,"amount_decimal":"10000","billing_scheme":"per_unit","created":1578478935,"currency":"usd","interval":"month","interval_count":1,"livemode":false,"metadata":{},"nickname":"testing month","product":"prod_GVctSX10Usl6FE","tiers":null,"tiers_mode":null,"transform_usage":null,"trial_period_days":17,"usage_type":"licensed"},"quantity":1,"subscription":"sub_GW3ZIjtGyEEOel","tax_rates":[]}],"has_more":false,"url":"/v1/subscription_items?subscription=sub_GW3ZIjtGyEEOel"},"latest_invoice":null,"livemode":false,"metadata":{},"next_pending_invoice_item_invoice":null,"pending_invoice_item_interval":null,"pending_setup_intent":null,"plan":{"id":"plan_GVcvwakJhpKlRD","object":"plan","active":true,"aggregate_usage":null,"amount":10000,"amount_decimal":"10000","billing_scheme":"per_unit","created":1578478935,"currency":"usd","interval":"month","interval_count":1,"livemode":false,"metadata":{},"nickname":"testing month","product":"prod_GVctSX10Usl6FE","tiers":null,"tiers_mode":null,"transform_usage":null,"trial_period_days":17,"usage_type":"licensed"},"quantity":1,"schedule":null,"start_date":1578578028,"status":"active","tax_percent":null,"trial_end":null,"trial_start":null}';
+    	
+        StripeSubscriptionObj stripeObject=JsonToStripeObject.jsonToSubscription((Map<String,Object>)JSON.deserializeUntyped(jsonStr));
+    }
+}

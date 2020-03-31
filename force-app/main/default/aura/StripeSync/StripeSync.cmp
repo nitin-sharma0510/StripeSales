@@ -1,0 +1,41 @@
+<aura:component >
+    <aura:registerEvent name="getBatchMapValues" type="c:StripeSyncEvent"/>
+    
+    <aura:attribute name="options" type="List" default=""/>
+    <aura:attribute name="batchMap" type="Map" default="{}"/>
+    <aura:attribute name="pickDep" type="Boolean" default="True"/>
+    <aura:attribute name="batchOption" type="List" default="[
+                                                            {'label': 'Sync Customers', 'value': 'SyncAllStripeCustomerBatch'},
+                                                            {'label': 'Sync Products', 'value': 'SyncAllStripeProductsBatch'},
+                                                            {'label': 'Sync Tax Rates', 'value': 'SyncAllStripeTaxRatesBatch'},
+                                                            {'label': 'Sync Charges', 'value': 'SyncAllStripeChargesBatch'}
+                                                            ]"/>
+    <div class="slds-card">
+        <div class="slds-p-around_medium">
+            Sync Global Objects for Sync
+            <div>
+                <div class="batchCss">
+                    <div class="inlineCss slds-m-horizontal_large">
+                        <lightning:combobox 
+                                            name="Select Account" 
+                                            label="Stripe Accounts"
+                                            placeholder="Select Account" 
+                                            options="{! v.options }" 
+                                            onchange="{! c.handleAccChange }"/>
+                    </div>
+                    <div class="inlineCss slds-m-horizontal_large">
+                        <lightning:combobox 
+                                            name="Select Batch Class" 
+                                            label="Batch Process"
+                                            placeholder="Select Process" 
+                                            options="{!v.batchOption}" 
+                                            onchange="{!c.handleBatchChange}"
+                                            disabled="{!v.pickDep}"/>
+                    </div>
+                    
+                    <button class="slds-button slds-button_brand slds-m-horizontal_large" onclick="{!c.setEvent}" >Run Sync</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>
